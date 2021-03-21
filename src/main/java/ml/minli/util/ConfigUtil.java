@@ -51,10 +51,10 @@ public class ConfigUtil {
                 configIsExist = true;
             }
         } else {
-            throw new Exception("目录创建失败");
+            throw new Exception("directory init failure...");
         }
         if (!configIsExist) {
-            throw new Exception("配置创建失败");
+            throw new Exception("config init failure...");
         }
         ScheduledExecutorService scheduledExecutorService = Executors
                 .newSingleThreadScheduledExecutor();

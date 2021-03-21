@@ -31,7 +31,10 @@ import javafx.stage.DirectoryChooser;
 import ml.minli.model.FileType;
 import ml.minli.model.PlayMedia;
 import ml.minli.util.ConfigUtil;
+import ml.minli.util.LanguageUtil;
 import ml.minli.util.PlayUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -45,6 +48,8 @@ import java.util.ResourceBundle;
  * @author Minli
  */
 public class MainController implements Initializable {
+
+    private static final Logger log = LogManager.getLogger(MainController.class.getName());
 
     @FXML
     public StackPane root;
@@ -146,33 +151,41 @@ public class MainController implements Initializable {
         });
     }
 
-    public void importMusic() throws Exception {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("选择目录");
-        File file = directoryChooser.showDialog(root.getScene().getWindow());
-        if (file != null && file.isDirectory()) {
-            List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.AUDIO)
-                    .anyMatch(type -> pathname.getName().endsWith("." + type)));
-            ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
-            for (int i = 0; i < fileList.size(); i++) {
-                PlayMedia playMedia = new PlayMedia();
-                playMedia.setFileName(fileList.get(i).getName());
-                playMedia.setFilePath(fileList.get(i).getAbsolutePath());
-                playMedia.setIndex(i);
-                playMediaList.add(playMedia);
+    public void importMusic() {
+        try {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle(LanguageUtil.getValue("play.import.select"));
+            File file = directoryChooser.showDialog(root.getScene().getWindow());
+            if (file != null && file.isDirectory()) {
+                List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.AUDIO)
+                        .anyMatch(type -> pathname.getName().endsWith("." + type)));
+                ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
+                for (int i = 0; i < fileList.size(); i++) {
+                    PlayMedia playMedia = new PlayMedia();
+                    playMedia.setFileName(fileList.get(i).getName());
+                    playMedia.setFilePath(fileList.get(i).getAbsolutePath());
+                    playMedia.setIndex(i);
+                    playMediaList.add(playMedia);
+                }
+                PlayUtil.playMediaList.addAll(playMediaList);
+                PlayUtil.saveList();
+                ConfigUtil.store();
+                playMediaListView.getItems().addAll(playMediaList);
             }
-            PlayUtil.playMediaList.addAll(playMediaList);
-            PlayUtil.saveList();
-            ConfigUtil.store();
-            playMediaListView.getItems().addAll(playMediaList);
+        } catch (Exception e) {
+            log.error("import music failure...", e);
         }
     }
 
-    public void clearMusic() throws Exception {
-        PlayUtil.playMediaList.clear();
-        PlayUtil.saveList();
-        ConfigUtil.store();
-        playMediaListView.getItems().clear();
+    public void clearMusic() {
+        try {
+            PlayUtil.playMediaList.clear();
+            PlayUtil.saveList();
+            ConfigUtil.store();
+            playMediaListView.getItems().clear();
+        } catch (Exception e) {
+            log.error("clear music failure...", e);
+        }
     }
 
     public void initProperty() {
