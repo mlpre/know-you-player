@@ -21,7 +21,7 @@
         "tta","voc","vqf","w64","wav","wma","wv","xa","xm"
         ```
     
-* ### Require
+* ### Build Require
 
     * Maven
     
@@ -29,20 +29,24 @@
 
 * ### How to use it:
     
-    * mvn package
+    * Download: [Releases](https://github.com/min-li/know-you-player/releases)
     
-    * jar -jar know-you-player-1.0.jar
+    * Build:
+    
+        * mvn package
+        
+        * execute build.bat(Require JDK16) or java -jar know-you-player-1.0.jar
 
 * ### Main Dependencies
 
-    1. vlc(https://www.videolan.org)
+    * vlc(https://www.videolan.org)
     
-    2. vlcj(https://github.com/caprica/vlcj)
+    * vlcj(https://github.com/caprica/vlcj)
     
-    3. ikonli(https://github.com/kordamp/ikonli)
+    * ikonli(https://github.com/kordamp/ikonli)
     
-    4. hutool(https://github.com/dromara/hutool)
+    * hutool(https://github.com/dromara/hutool)
     
-    5. fastjson(https://github.com/alibaba/fastjson)        
+    * fastjson(https://github.com/alibaba/fastjson)        
 
-    6. log4j2(http://logging.apache.org/log4j/2.x/)
+    * log4j2(http://logging.apache.org/log4j/2.x/)
