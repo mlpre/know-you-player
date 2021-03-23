@@ -15,6 +15,9 @@
  */
 package ml.minli.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -26,6 +29,8 @@ import java.util.zip.ZipInputStream;
  * @author Minli
  */
 public class ResourceUtil {
+
+    private static final Logger log = LogManager.getLogger(ResourceUtil.class.getName());
 
     private static final String jnaPath = System.getProperty("user.home") + File.separator + ".vlcj";
 
@@ -51,7 +56,7 @@ public class ResourceUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("VLC Init Error", e);
         }
         System.setProperty("jna.library.path", jnaPath);
     }
