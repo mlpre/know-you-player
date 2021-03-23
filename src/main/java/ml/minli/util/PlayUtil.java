@@ -23,12 +23,14 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import ml.minli.model.PlayMedia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
+import uk.co.caprica.vlcj.javafx.videosurface.ImageViewVideoSurfaceFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -50,11 +52,15 @@ public class PlayUtil {
 
     public final EmbeddedMediaPlayer embeddedMediaPlayer;
 
-    public PlayUtil(Slider time, Label timeLabel, FontIcon playButton, ListView<PlayMedia> playMediaListView) {
+    public final ImageView imageView;
+
+    public PlayUtil(ImageView imageView, Slider time, Label timeLabel, FontIcon playButton, ListView<PlayMedia> playMediaListView) {
         time.setMin(0);
         timeLabel.setText("0:0/0:0");
+        this.imageView = imageView;
         this.mediaPlayerFactory = new MediaPlayerFactory();
         this.embeddedMediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
+        this.embeddedMediaPlayer.videoSurface().set(ImageViewVideoSurfaceFactory.videoSurfaceForImageView(imageView));
         this.embeddedMediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void playing(MediaPlayer mediaPlayer) {
@@ -81,10 +87,10 @@ public class PlayUtil {
                     PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
                     if (selectedItem != null) {
                         if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
-                            playMusic(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
+                            playMedia(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
                             playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
                         } else {
-                            playMusic(playMediaListView.getItems().get(0).getFilePath());
+                            playMedia(playMediaListView.getItems().get(0).getFilePath());
                             playMediaListView.getSelectionModel().select(0);
                         }
                         playButton.setIconCode(FontAwesomeSolid.PAUSE);
@@ -94,9 +100,10 @@ public class PlayUtil {
         });
     }
 
-    public void playMusic(String musicPath) {
+    public void playMedia(String mediaPath) {
         try {
-            embeddedMediaPlayer.media().play(musicPath);
+            imageView.setImage(null);
+            embeddedMediaPlayer.media().play(mediaPath);
         } catch (Exception e) {
             log.error("Play Error", e);
         }

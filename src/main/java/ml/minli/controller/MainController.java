@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -35,6 +36,7 @@ import ml.minli.util.LanguageUtil;
 import ml.minli.util.PlayUtil;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
+import uk.co.caprica.vlcj.javafx.view.ResizableImageView;
 
 import java.io.File;
 import java.net.URL;
@@ -74,10 +76,17 @@ public class MainController implements Initializable {
 
     public static PlayUtil playUtil;
 
+    public ResizableImageView resizableImageView;
+
+    public ImageView imageView;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.imageView = new ImageView();
+        this.resizableImageView = new ResizableImageView(imageView);
+        borderPane.setCenter(this.resizableImageView);
         //初始化播放器
-        playUtil = new PlayUtil(time, timeLabel, playButton, playMediaListView);
+        playUtil = new PlayUtil(imageView, time, timeLabel, playButton, playMediaListView);
         Platform.runLater(() -> {
             //初始化UI属性
             initProperty();
@@ -89,7 +98,7 @@ public class MainController implements Initializable {
                 if (mouseEvent.getClickCount() == 2) {
                     if (playMediaListView.getSelectionModel().getSelectedItem() != null) {
                         String filePath = playMediaListView.getSelectionModel().getSelectedItem().getFilePath();
-                        playUtil.playMusic(filePath);
+                        playUtil.playMedia(filePath);
                         playButton.setIconCode(FontAwesomeSolid.PAUSE);
                     }
                 }
@@ -98,7 +107,7 @@ public class MainController implements Initializable {
             playButton.setOnMouseClicked(event -> {
                 if (playUtil.embeddedMediaPlayer.status().state().intValue() == 0) {
                     if (!playMediaListView.getItems().isEmpty()) {
-                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playUtil.playMedia(playMediaListView.getItems().get(0).getFilePath());
                         playMediaListView.getSelectionModel().select(0);
                         playButton.setIconCode(FontAwesomeSolid.PAUSE);
                     }
@@ -123,10 +132,10 @@ public class MainController implements Initializable {
                 PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     if (selectedItem.getIndex() - 1 >= 0) {
-                        playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() - 1).getFilePath());
+                        playUtil.playMedia(playMediaListView.getItems().get(selectedItem.getIndex() - 1).getFilePath());
                         playMediaListView.getSelectionModel().select(selectedItem.getIndex() - 1);
                     } else {
-                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playUtil.playMedia(playMediaListView.getItems().get(0).getFilePath());
                         playMediaListView.getSelectionModel().select(0);
                     }
                     playButton.setIconCode(FontAwesomeSolid.PAUSE);
@@ -137,10 +146,10 @@ public class MainController implements Initializable {
                 PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
-                        playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
+                        playUtil.playMedia(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
                         playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
                     } else {
-                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playUtil.playMedia(playMediaListView.getItems().get(0).getFilePath());
                         playMediaListView.getSelectionModel().select(0);
                     }
                     playButton.setIconCode(FontAwesomeSolid.PAUSE);
@@ -149,12 +158,12 @@ public class MainController implements Initializable {
         });
     }
 
-    public void importMusic() throws Exception {
+    public void importMedia() throws Exception {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle(LanguageUtil.getValue("play.import.select"));
         File file = directoryChooser.showDialog(root.getScene().getWindow());
         if (file != null && file.isDirectory()) {
-            List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.AUDIO)
+            List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.MEDIA)
                     .anyMatch(type -> pathname.getName().endsWith("." + type)));
             ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
             for (int i = 0; i < fileList.size(); i++) {
@@ -171,7 +180,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void clearMusic() throws Exception {
+    public void clearMedia() throws Exception {
         PlayUtil.playMediaList.clear();
         PlayUtil.saveList();
         ConfigUtil.store();

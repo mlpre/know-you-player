@@ -19,12 +19,12 @@
          <top>
             <ToolBar fx:id="tool" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="importButton" mnemonicParsing="false" onAction="#importMusic" text="%play.import">
+                  <Button fx:id="importButton" mnemonicParsing="false" onAction="#importMedia" text="%play.import">
                      <graphic>
                         <FontIcon iconColor="#5264ae" iconLiteral="fas-plus-square" iconSize="20" />
                      </graphic>
                   </Button>
-                  <Button fx:id="clearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearMusic" text="%play.clear">
+                  <Button fx:id="clearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearMedia" text="%play.clear">
                      <graphic>
                         <FontIcon iconColor="#dc3545" iconLiteral="fas-trash" iconSize="20" />
                      </graphic>
@@ -74,13 +74,6 @@
          <left>
             <ListView fx:id="playMediaListView" BorderPane.alignment="CENTER" />
          </left>
-         <center>
-            <Label BorderPane.alignment="CENTER">
-               <graphic>
-                  <FontIcon iconColor="#5264ae" iconLiteral="fas-music" iconSize="100" />
-               </graphic>
-            </Label>
-         </center>
       </BorderPane>
    </children>
 </StackPane>
