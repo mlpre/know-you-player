@@ -33,8 +33,6 @@ import ml.minli.model.PlayMedia;
 import ml.minli.util.ConfigUtil;
 import ml.minli.util.LanguageUtil;
 import ml.minli.util.PlayUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -48,8 +46,6 @@ import java.util.ResourceBundle;
  * @author Minli
  */
 public class MainController implements Initializable {
-
-    private static final Logger log = LogManager.getLogger(MainController.class.getName());
 
     @FXML
     public StackPane root;
@@ -82,119 +78,111 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //初始化播放器
         playUtil = new PlayUtil(time, timeLabel, playButton, playMediaListView);
-        //初始化UI属性
-        initProperty();
-        //载入配置
-        ObservableList<PlayMedia> playMediaList = PlayUtil.loadList();
-        playMediaListView.getItems().addAll(playMediaList);
-        //注册双击播放列表监听器
-        playMediaListView.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) {
-                if (playMediaListView.getSelectionModel().getSelectedItem() != null) {
-                    String filePath = playMediaListView.getSelectionModel().getSelectedItem().getFilePath();
-                    playUtil.playMusic(filePath);
+        Platform.runLater(() -> {
+            //初始化UI属性
+            initProperty();
+            //载入配置
+            ObservableList<PlayMedia> playMediaList = PlayUtil.loadList();
+            playMediaListView.getItems().addAll(playMediaList);
+            //注册双击播放列表监听器
+            playMediaListView.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getClickCount() == 2) {
+                    if (playMediaListView.getSelectionModel().getSelectedItem() != null) {
+                        String filePath = playMediaListView.getSelectionModel().getSelectedItem().getFilePath();
+                        playUtil.playMusic(filePath);
+                        playButton.setIconCode(FontAwesomeSolid.PAUSE);
+                    }
+                }
+            });
+            //注册播放按钮事件
+            playButton.setOnMouseClicked(event -> {
+                if (playUtil.embeddedMediaPlayer.status().state().intValue() == 0) {
+                    if (!playMediaListView.getItems().isEmpty()) {
+                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playMediaListView.getSelectionModel().select(0);
+                        playButton.setIconCode(FontAwesomeSolid.PAUSE);
+                    }
+                } else {
+                    if (playUtil.embeddedMediaPlayer.status().isPlaying()) {
+                        playButton.setIconCode(FontAwesomeSolid.PLAY);
+                        playUtil.embeddedMediaPlayer.controls().pause();
+                    } else {
+                        playButton.setIconCode(FontAwesomeSolid.PAUSE);
+                        playUtil.embeddedMediaPlayer.controls().start();
+                    }
+                }
+            });
+            //注册播放拖动时间事件
+            time.setOnMouseDragged(event -> {
+                if (playUtil != null && playUtil.embeddedMediaPlayer.status().isPlaying()) {
+                    playUtil.embeddedMediaPlayer.controls().setTime((long) time.getValue() * 1000);
+                }
+            });
+            //上一曲
+            backwardButton.setOnMouseClicked(event -> {
+                PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    if (selectedItem.getIndex() - 1 >= 0) {
+                        playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() - 1).getFilePath());
+                        playMediaListView.getSelectionModel().select(selectedItem.getIndex() - 1);
+                    } else {
+                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playMediaListView.getSelectionModel().select(0);
+                    }
                     playButton.setIconCode(FontAwesomeSolid.PAUSE);
                 }
-            }
-        });
-        //注册播放按钮事件
-        playButton.setOnMouseClicked(event -> {
-            if (playUtil.embeddedMediaPlayer.status().state().intValue() == 0) {
-                if (!playMediaListView.getItems().isEmpty()) {
-                    playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
-                    playMediaListView.getSelectionModel().select(0);
+            });
+            //下一曲
+            forwardButton.setOnMouseClicked(event -> {
+                PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
+                        playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
+                        playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
+                    } else {
+                        playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
+                        playMediaListView.getSelectionModel().select(0);
+                    }
                     playButton.setIconCode(FontAwesomeSolid.PAUSE);
                 }
-            } else {
-                if (playUtil.embeddedMediaPlayer.status().isPlaying()) {
-                    playButton.setIconCode(FontAwesomeSolid.PLAY);
-                    playUtil.embeddedMediaPlayer.controls().pause();
-                } else {
-                    playButton.setIconCode(FontAwesomeSolid.PAUSE);
-                    playUtil.embeddedMediaPlayer.controls().start();
-                }
-            }
-        });
-        //注册播放拖动时间事件
-        time.setOnMouseDragged(event -> {
-            if (playUtil != null && playUtil.embeddedMediaPlayer.status().isPlaying()) {
-                playUtil.embeddedMediaPlayer.controls().setTime((long) time.getValue() * 1000);
-            }
-        });
-        //上一曲
-        backwardButton.setOnMouseClicked(event -> {
-            PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                if (selectedItem.getIndex() - 1 >= 0) {
-                    playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() - 1).getFilePath());
-                    playMediaListView.getSelectionModel().select(selectedItem.getIndex() - 1);
-                } else {
-                    playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
-                    playMediaListView.getSelectionModel().select(0);
-                }
-                playButton.setIconCode(FontAwesomeSolid.PAUSE);
-            }
-        });
-        //下一曲
-        forwardButton.setOnMouseClicked(event -> {
-            PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
-                    playUtil.playMusic(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
-                    playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
-                } else {
-                    playUtil.playMusic(playMediaListView.getItems().get(0).getFilePath());
-                    playMediaListView.getSelectionModel().select(0);
-                }
-                playButton.setIconCode(FontAwesomeSolid.PAUSE);
-            }
+            });
         });
     }
 
-    public void importMusic() {
-        try {
-            DirectoryChooser directoryChooser = new DirectoryChooser();
-            directoryChooser.setTitle(LanguageUtil.getValue("play.import.select"));
-            File file = directoryChooser.showDialog(root.getScene().getWindow());
-            if (file != null && file.isDirectory()) {
-                List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.AUDIO)
-                        .anyMatch(type -> pathname.getName().endsWith("." + type)));
-                ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
-                for (int i = 0; i < fileList.size(); i++) {
-                    PlayMedia playMedia = new PlayMedia();
-                    playMedia.setFileName(fileList.get(i).getName());
-                    playMedia.setFilePath(fileList.get(i).getAbsolutePath());
-                    playMedia.setIndex(i);
-                    playMediaList.add(playMedia);
-                }
-                PlayUtil.playMediaList.addAll(playMediaList);
-                PlayUtil.saveList();
-                ConfigUtil.store();
-                playMediaListView.getItems().addAll(playMediaList);
+    public void importMusic() throws Exception {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(LanguageUtil.getValue("play.import.select"));
+        File file = directoryChooser.showDialog(root.getScene().getWindow());
+        if (file != null && file.isDirectory()) {
+            List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.AUDIO)
+                    .anyMatch(type -> pathname.getName().endsWith("." + type)));
+            ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
+            for (int i = 0; i < fileList.size(); i++) {
+                PlayMedia playMedia = new PlayMedia();
+                playMedia.setFileName(fileList.get(i).getName());
+                playMedia.setFilePath(fileList.get(i).getAbsolutePath());
+                playMedia.setIndex(i);
+                playMediaList.add(playMedia);
             }
-        } catch (Exception e) {
-            log.error("import music failure...", e);
-        }
-    }
-
-    public void clearMusic() {
-        try {
-            PlayUtil.playMediaList.clear();
+            PlayUtil.playMediaList.addAll(playMediaList);
             PlayUtil.saveList();
             ConfigUtil.store();
-            playMediaListView.getItems().clear();
-        } catch (Exception e) {
-            log.error("clear music failure...", e);
+            playMediaListView.getItems().addAll(playMediaList);
         }
+    }
+
+    public void clearMusic() throws Exception {
+        PlayUtil.playMediaList.clear();
+        PlayUtil.saveList();
+        ConfigUtil.store();
+        playMediaListView.getItems().clear();
     }
 
     public void initProperty() {
         time.setValue(0);
         //动态绑定窗口宽度
-        Platform.runLater(() -> {
-            playMediaListView.minWidthProperty().bind(root.getScene().widthProperty().multiply(0.1));
-            playMediaListView.maxWidthProperty().bind(root.getScene().widthProperty().multiply(0.4));
-        });
+        playMediaListView.minWidthProperty().bind(root.getScene().widthProperty().multiply(0.1));
+        playMediaListView.maxWidthProperty().bind(root.getScene().widthProperty().multiply(0.4));
         //鼠标移入left右边界，更换鼠标控件
         playMediaListView.addEventFilter(MouseEvent.MOUSE_MOVED, event -> {
             if (event.getX() >= playMediaListView.getWidth() - 5) {

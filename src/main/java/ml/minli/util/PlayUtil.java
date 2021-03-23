@@ -24,6 +24,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import ml.minli.model.PlayMedia;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
@@ -39,6 +41,8 @@ import java.util.Properties;
  * @author Minli
  */
 public class PlayUtil {
+
+    private static final Logger log = LogManager.getLogger(PlayUtil.class.getName());
 
     public static ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
 
@@ -94,7 +98,7 @@ public class PlayUtil {
         try {
             embeddedMediaPlayer.media().play(musicPath);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Play Error", e);
         }
     }
 

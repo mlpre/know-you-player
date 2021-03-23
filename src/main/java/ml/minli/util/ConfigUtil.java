@@ -15,6 +15,9 @@
  */
 package ml.minli.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -27,6 +30,8 @@ import java.util.concurrent.TimeUnit;
  * @author Minli
  */
 public class ConfigUtil {
+
+    private static final Logger log = LogManager.getLogger(ConfigUtil.class.getName());
 
     public static final String CONFIG_PATH = System.getProperty("user.home") + File.separator + ".know-you-player";
 
@@ -63,7 +68,7 @@ public class ConfigUtil {
             try {
                 store();
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Save Config Error", e);
             }
         }, 0, 5, TimeUnit.SECONDS);
     }
