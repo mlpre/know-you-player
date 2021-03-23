@@ -24,6 +24,7 @@ open module know.you.player {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires uk.co.caprica.vlcj;
+    requires uk.co.caprica.vlcj.javafx;
     requires hutool.core;
     requires fastjson;
     requires org.apache.logging.log4j;
