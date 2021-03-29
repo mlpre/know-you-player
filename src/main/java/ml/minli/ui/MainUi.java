@@ -47,8 +47,8 @@ public class MainUi extends Application {
         scene.getStylesheets().add(ResourceUtil.getExternalForm("css/main.css"));
         stage.getIcons().add(new Image(ResourceUtil.getInputStream("img/logo.png")));
         stage.setScene(scene);
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);
+        stage.setMinWidth(1296);
+        stage.setMinHeight(759);
         stage.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(ResourceUtil.getInputStream("img/logo.png")));
