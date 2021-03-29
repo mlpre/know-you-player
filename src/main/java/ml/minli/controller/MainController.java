@@ -22,14 +22,23 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ml.minli.model.FileType;
+import ml.minli.model.MediaListCell;
 import ml.minli.model.PlayMedia;
 import ml.minli.util.ConfigUtil;
 import ml.minli.util.LanguageUtil;
@@ -59,6 +68,8 @@ public class MainController implements Initializable {
     public Button importButton;
     @FXML
     public Button clearButton;
+    @FXML
+    public Button onlinePlayButton;
     @FXML
     public FontIcon backwardButton;
     @FXML
@@ -155,6 +166,28 @@ public class MainController implements Initializable {
                     playButton.setIconCode(FontAwesomeSolid.PAUSE);
                 }
             });
+            //全屏事件
+            imageView.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getClickCount() == 2) {
+                    Parent parent = imageView.getParent().getParent();
+                    if (imageView.getImage() != null && parent instanceof BorderPane) {
+                        Stage mainStage = (Stage) root.getScene().getWindow();
+                        Stage newStage = new Stage();
+                        newStage.initStyle(StageStyle.UNDECORATED);
+                        newStage.setScene(new Scene(new StackPane(resizableImageView)));
+                        newStage.setFullScreen(true);
+                        mainStage.close();
+                        newStage.show();
+                        newStage.fullScreenProperty().addListener((observableValue, oldValue, newValue) -> {
+                            if (!newValue) {
+                                newStage.close();
+                                borderPane.setCenter(this.resizableImageView);
+                                mainStage.show();
+                            }
+                        });
+                    }
+                }
+            });
         });
     }
 
@@ -209,6 +242,15 @@ public class MainController implements Initializable {
                 playMediaListView.setPrefWidth(event.getX());
             }
         });
+        //初始化列表
+        playMediaListView.setCellFactory(list -> new MediaListCell());
     }
 
+    public void onlinePlay() {
+        Platform.runLater(() -> {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            String path = clipboard.getContent(DataFormat.PLAIN_TEXT).toString();
+            playUtil.playMedia(path);
+        });
+    }
 }

@@ -97,6 +97,11 @@ public class PlayUtil {
                     }
                 });
             }
+
+            @Override
+            public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+                Platform.runLater(() -> playButton.setIconCode(FontAwesomeSolid.PAUSE));
+            }
         });
     }
 
