@@ -79,7 +79,6 @@ public class WebController implements Initializable {
                     PlayMedia playMedia = new PlayMedia();
                     playMedia.setFilePath(src);
                     playMedia.setFileName(audioName);
-                    playMedia.setIndex(PlayUtil.playMediaList.size() + 1);
                     PlayUtil.playMediaList.add(playMedia);
                     PlayUtil.saveList();
                     ConfigUtil.store();

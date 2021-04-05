@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import ml.minli.model.PlayMedia;
@@ -84,11 +85,11 @@ public class PlayUtil {
             public void finished(MediaPlayer mediaPlayer) {
                 Platform.runLater(() -> {
                     playButton.setIconCode(FontAwesomeSolid.PLAY);
-                    PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
-                    if (selectedItem != null) {
-                        if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
-                            playMedia(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
-                            playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
+                    MultipleSelectionModel<PlayMedia> selectionModel = playMediaListView.getSelectionModel();
+                    if (selectionModel != null) {
+                        if (selectionModel.getSelectedIndex() + 1 < playMediaListView.getItems().size()) {
+                            playMedia(playMediaListView.getItems().get(selectionModel.getSelectedIndex() + 1).getFilePath());
+                            playMediaListView.getSelectionModel().select(selectionModel.getSelectedIndex() + 1);
                         } else {
                             playMedia(playMediaListView.getItems().get(0).getFilePath());
                             playMediaListView.getSelectionModel().select(0);
