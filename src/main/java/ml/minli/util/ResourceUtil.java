@@ -15,6 +15,7 @@
  */
 package ml.minli.util;
 
+import cn.hutool.core.io.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,10 +33,15 @@ public class ResourceUtil {
 
     private static final Logger log = LogManager.getLogger(ResourceUtil.class.getName());
 
+    public static final String cachePath = System.getProperty("user.home") + File.separator + ".know-you-player" + File.separator + "cache";
+
+    public static final String downloadPath = System.getProperty("user.home") + File.separator + "Music";
+
     private static final String jnaPath = System.getProperty("user.home") + File.separator + ".vlcj";
 
     static {
         try {
+            FileUtil.mkdir(downloadPath);
             File jnaLib = new File(jnaPath);
             if (!jnaLib.exists()) {
                 ZipInputStream zipInputStream = new ZipInputStream(ResourceUtil.getInputStream("vlc/win64.zip"));

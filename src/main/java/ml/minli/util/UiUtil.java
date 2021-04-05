@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package ml.minli.util;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Minli
  */
-open module know.you.player {
-    requires java.sql;
-    requires javafx.graphics;
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires javafx.web;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.fontawesome5;
-    requires uk.co.caprica.vlcj;
-    requires uk.co.caprica.vlcj.javafx;
-    requires hutool.core;
-    requires hutool.http;
-    requires fastjson;
-    requires org.apache.logging.log4j;
+public class UiUtil {
+
+    public static Map<String, Object> stageMap = new HashMap<>();
+
+    public static Map<String, Object> controllerMap = new HashMap<>();
+
+    private UiUtil() {
+
+    }
+
 }

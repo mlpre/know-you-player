@@ -24,14 +24,19 @@
                         <FontIcon iconColor="#5264ae" iconLiteral="fas-plus-square" iconSize="20" />
                      </graphic>
                   </Button>
-                  <Button fx:id="clearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearMedia" text="%play.clear">
+                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearMedia" text="%play.clear">
                      <graphic>
                         <FontIcon iconColor="#dc3545" iconLiteral="fas-trash" iconSize="20" />
                      </graphic>
                   </Button>
-                  <Button fx:id="onlinePlayButton" layoutX="76.0" layoutY="10.0" mnemonicParsing="false" onAction="#onlinePlay" text="%play.onlinePlay">
+                  <Button fx:id="onlinePlayButton" mnemonicParsing="false" onAction="#onlinePlay" text="%play.onlinePlay">
                      <graphic>
                         <FontIcon iconColor="#28a745" iconLiteral="fas-play-circle" iconSize="20" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="onlineAnalyseButton" mnemonicParsing="false" onAction="#onlineAnalyse" text="%play.web">
+                     <graphic>
+                        <FontIcon iconColor="#00ccff" iconLiteral="fas-link" iconSize="20" />
                      </graphic>
                   </Button>
                </items>
