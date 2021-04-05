@@ -10,6 +10,8 @@
 
     * The software supports Chinese and English, automatically switch according to the system language
     
+    * Support automatic analysis of Web audio function, and support import player and download
+    
     * It supports most formats of media files. Currently, it supports the following formats:
     
         ```

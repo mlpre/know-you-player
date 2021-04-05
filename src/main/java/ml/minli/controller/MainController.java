@@ -141,11 +141,11 @@ public class MainController implements Initializable {
             });
             //上一曲
             backwardButton.setOnMouseClicked(event -> {
-                PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    if (selectedItem.getIndex() - 1 >= 0) {
-                        playUtil.playMedia(playMediaListView.getItems().get(selectedItem.getIndex() - 1).getFilePath());
-                        playMediaListView.getSelectionModel().select(selectedItem.getIndex() - 1);
+                MultipleSelectionModel<PlayMedia> selectionModel = playMediaListView.getSelectionModel();
+                if (selectionModel != null) {
+                    if (selectionModel.getSelectedIndex() - 1 > 0) {
+                        playUtil.playMedia(playMediaListView.getItems().get(selectionModel.getSelectedIndex() - 1).getFilePath());
+                        playMediaListView.getSelectionModel().select(selectionModel.getSelectedIndex() - 1);
                     } else {
                         playUtil.playMedia(playMediaListView.getItems().get(0).getFilePath());
                         playMediaListView.getSelectionModel().select(0);
@@ -155,11 +155,11 @@ public class MainController implements Initializable {
             });
             //下一曲
             forwardButton.setOnMouseClicked(event -> {
-                PlayMedia selectedItem = playMediaListView.getSelectionModel().getSelectedItem();
-                if (selectedItem != null) {
-                    if (selectedItem.getIndex() + 1 <= playMediaListView.getItems().size()) {
-                        playUtil.playMedia(playMediaListView.getItems().get(selectedItem.getIndex() + 1).getFilePath());
-                        playMediaListView.getSelectionModel().select(selectedItem.getIndex() + 1);
+                MultipleSelectionModel<PlayMedia> selectionModel = playMediaListView.getSelectionModel();
+                if (selectionModel != null) {
+                    if (selectionModel.getSelectedIndex() + 1 < playMediaListView.getItems().size()) {
+                        playUtil.playMedia(playMediaListView.getItems().get(selectionModel.getSelectedIndex() + 1).getFilePath());
+                        playMediaListView.getSelectionModel().select(selectionModel.getSelectedIndex() + 1);
                     } else {
                         playUtil.playMedia(playMediaListView.getItems().get(0).getFilePath());
                         playMediaListView.getSelectionModel().select(0);
@@ -200,11 +200,10 @@ public class MainController implements Initializable {
             List<File> fileList = FileUtil.loopFiles(file, pathname -> Arrays.stream(FileType.MEDIA)
                     .anyMatch(type -> pathname.getName().endsWith("." + type)));
             ObservableList<PlayMedia> playMediaList = FXCollections.observableArrayList();
-            for (int i = 0; i < fileList.size(); i++) {
+            for (File value : fileList) {
                 PlayMedia playMedia = new PlayMedia();
-                playMedia.setFileName(fileList.get(i).getName());
-                playMedia.setFilePath(fileList.get(i).getAbsolutePath());
-                playMedia.setIndex(PlayUtil.playMediaList.size() + i);
+                playMedia.setFileName(value.getName());
+                playMedia.setFilePath(value.getAbsolutePath());
                 playMediaList.add(playMedia);
             }
             PlayUtil.playMediaList.addAll(playMediaList);
@@ -256,7 +255,6 @@ public class MainController implements Initializable {
                 PlayMedia playMedia = new PlayMedia();
                 playMedia.setFileName(path);
                 playMedia.setFilePath(path);
-                playMedia.setIndex(PlayUtil.playMediaList.size() + 1);
                 PlayUtil.playMediaList.add(playMedia);
                 PlayUtil.saveList();
                 ConfigUtil.store();
