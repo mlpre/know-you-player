@@ -40,9 +40,7 @@ import javafx.stage.StageStyle;
 import ml.minli.model.FileType;
 import ml.minli.model.MediaListCell;
 import ml.minli.model.PlayMedia;
-import ml.minli.util.ConfigUtil;
-import ml.minli.util.LanguageUtil;
-import ml.minli.util.PlayUtil;
+import ml.minli.util.*;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import uk.co.caprica.vlcj.javafx.view.ResizableImageView;
@@ -71,6 +69,8 @@ public class MainController implements Initializable {
     @FXML
     public Button onlinePlayButton;
     @FXML
+    public Button onlineAnalyseButton;
+    @FXML
     public FontIcon backwardButton;
     @FXML
     public FontIcon playButton;
@@ -93,6 +93,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        UiUtil.controllerMap.put(this.getClass().getName(), this);
         this.imageView = new ImageView();
         this.resizableImageView = new ResizableImageView(imageView);
         borderPane.setCenter(this.resizableImageView);
@@ -203,7 +204,7 @@ public class MainController implements Initializable {
                 PlayMedia playMedia = new PlayMedia();
                 playMedia.setFileName(fileList.get(i).getName());
                 playMedia.setFilePath(fileList.get(i).getAbsolutePath());
-                playMedia.setIndex(i);
+                playMedia.setIndex(PlayUtil.playMediaList.size() + i);
                 playMediaList.add(playMedia);
             }
             PlayUtil.playMediaList.addAll(playMediaList);
@@ -224,7 +225,8 @@ public class MainController implements Initializable {
         time.setValue(0);
         //动态绑定窗口宽度
         playMediaListView.minWidthProperty().bind(root.getScene().widthProperty().multiply(0.1));
-        playMediaListView.maxWidthProperty().bind(root.getScene().widthProperty().multiply(0.4));
+        playMediaListView.prefWidthProperty().bind(root.getScene().widthProperty().multiply(0.5));
+        playMediaListView.maxWidthProperty().bind(root.getScene().widthProperty().multiply(0.9));
         //鼠标移入left右边界，更换鼠标控件
         playMediaListView.addEventFilter(MouseEvent.MOUSE_MOVED, event -> {
             if (event.getX() >= playMediaListView.getWidth() - 5) {
@@ -250,7 +252,25 @@ public class MainController implements Initializable {
         Platform.runLater(() -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             String path = clipboard.getContent(DataFormat.PLAIN_TEXT).toString();
+            try {
+                PlayMedia playMedia = new PlayMedia();
+                playMedia.setFileName(path);
+                playMedia.setFilePath(path);
+                playMedia.setIndex(PlayUtil.playMediaList.size() + 1);
+                PlayUtil.playMediaList.add(playMedia);
+                PlayUtil.saveList();
+                ConfigUtil.store();
+                playMediaListView.getItems().add(playMedia);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             playUtil.playMedia(path);
         });
     }
+
+    public void onlineAnalyse() {
+        Stage webStage = (Stage) UiUtil.stageMap.get("webStage");
+        webStage.show();
+    }
+
 }

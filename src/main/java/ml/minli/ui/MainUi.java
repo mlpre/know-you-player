@@ -15,6 +15,7 @@
  */
 package ml.minli.ui;
 
+import cn.hutool.core.io.FileUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +26,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import ml.minli.controller.WebController;
 import ml.minli.util.ConfigUtil;
 import ml.minli.util.LanguageUtil;
 import ml.minli.util.ResourceUtil;
+import ml.minli.util.UiUtil;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -39,8 +42,15 @@ import java.util.Optional;
 public class MainUi extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void init() throws Exception {
+        FileUtil.del(ResourceUtil.cachePath);
+        super.init();
         ConfigUtil.initConfig();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        initOtherStage();
         Parent main = FXMLLoader.load(ResourceUtil.getResource("fxml/main.fxml"), LanguageUtil.resourceBundle);
         stage.setTitle(LanguageUtil.getValue("play.title"));
         Scene scene = new Scene(main);
@@ -68,7 +78,25 @@ public class MainUi extends Application {
                 }
             });
         });
+        UiUtil.stageMap.put("mainStage", stage);
         stage.show();
+    }
+
+    public void initOtherStage() throws Exception {
+        Parent web = FXMLLoader.load(ResourceUtil.getResource("fxml/web.fxml"), LanguageUtil.resourceBundle);
+        Stage webStage = new Stage();
+        webStage.setTitle(LanguageUtil.getValue("play.title"));
+        Scene webScene = new Scene(web);
+        webScene.getStylesheets().add(ResourceUtil.getExternalForm("css/main.css"));
+        webStage.getIcons().add(new Image(ResourceUtil.getInputStream("img/logo.png")));
+        webStage.setScene(webScene);
+        webStage.setMinWidth(800);
+        webStage.setMinHeight(600);
+        webStage.setOnCloseRequest(event -> {
+            WebController webController = (WebController) UiUtil.controllerMap.get(WebController.class.getName());
+            webController.web.getEngine().load(null);
+        });
+        UiUtil.stageMap.put("webStage", webStage);
     }
 
 }

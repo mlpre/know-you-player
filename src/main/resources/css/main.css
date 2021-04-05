@@ -32,8 +32,20 @@
     -fx-border-color: #F4F4F4;
 }
 
-.button {
+.tool-bar .button {
     -fx-background-color: white;
+}
+
+.list-cell .button {
+    -fx-background-color: #EEEEEE;
+}
+
+.tool-bar .button:hover, .list-cell .button:hover {
+    -fx-background-color: #CCCCCC;
+}
+
+.tool-bar .button:pressed, .list-cell .button:pressed {
+    -fx-background-color: #999999;
 }
 
 .list-cell {
