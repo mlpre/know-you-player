@@ -27,7 +27,6 @@ open module know.you.player {
     requires uk.co.caprica.vlcj;
     requires uk.co.caprica.vlcj.javafx;
     requires hutool.core;
-    requires hutool.http;
     requires fastjson;
     requires org.apache.logging.log4j;
 }

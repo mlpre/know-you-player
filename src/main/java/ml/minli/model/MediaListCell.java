@@ -15,7 +15,6 @@
  */
 package ml.minli.model;
 
-import cn.hutool.http.HttpUtil;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,10 +23,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 import ml.minli.controller.MainController;
-import ml.minli.util.ConfigUtil;
-import ml.minli.util.PlayUtil;
-import ml.minli.util.ResourceUtil;
-import ml.minli.util.UiUtil;
+import ml.minli.util.*;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -82,7 +78,7 @@ public class MediaListCell extends ListCell<PlayMedia> {
                             } else {
                                 fileName = fileName + suffix;
                             }
-                            HttpUtil.downloadFile(filePath, ResourceUtil.downloadPath + File.separator + fileName);
+                            DownloadUtil.download(filePath, ResourceUtil.downloadPath + File.separator + fileName);
                             PlayMedia newPlayMedia = PlayUtil.playMediaList.get(mediaListCell.getIndex());
                             newPlayMedia.setFilePath(ResourceUtil.downloadPath + File.separator + fileName);
                             newPlayMedia.setFileName(fileName);
