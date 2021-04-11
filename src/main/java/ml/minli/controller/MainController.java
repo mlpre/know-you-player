@@ -37,9 +37,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ml.minli.model.FileType;
+import ml.minli.api.AnalyseService;
+import ml.minli.api.model.FileType;
+import ml.minli.api.model.PlayMedia;
+import ml.minli.api.util.*;
 import ml.minli.model.MediaListCell;
-import ml.minli.model.PlayMedia;
 import ml.minli.util.*;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -50,6 +52,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.ServiceLoader;
 
 /**
  * @author Minli
@@ -68,8 +71,6 @@ public class MainController implements Initializable {
     public Button clearButton;
     @FXML
     public Button onlinePlayButton;
-    @FXML
-    public Button onlineAnalyseButton;
     @FXML
     public FontIcon backwardButton;
     @FXML
@@ -99,6 +100,8 @@ public class MainController implements Initializable {
         borderPane.setCenter(this.resizableImageView);
         //初始化播放器
         playUtil = new PlayUtil(imageView, time, timeLabel, playButton, playMediaListView);
+        //初始化分析插件
+        initAnalysePlugin();
         Platform.runLater(() -> {
             //初始化UI属性
             initProperty();
@@ -247,6 +250,12 @@ public class MainController implements Initializable {
         playMediaListView.setCellFactory(list -> new MediaListCell());
     }
 
+    public void initAnalysePlugin() {
+        JarUtil.loadJarToCurrentThread(Plugin.analysePlugin);
+        ServiceLoader<AnalyseService> serviceLoader = ServiceLoader.load(AnalyseService.class);
+        serviceLoader.forEach(analyseService -> analyseService.analyse(tool, playMediaListView));
+    }
+
     public void onlinePlay() {
         Platform.runLater(() -> {
             Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -264,11 +273,6 @@ public class MainController implements Initializable {
             }
             playUtil.playMedia(path);
         });
-    }
-
-    public void onlineAnalyse() {
-        Stage webStage = (Stage) UiUtil.stageMap.get("webStage");
-        webStage.show();
     }
 
 }

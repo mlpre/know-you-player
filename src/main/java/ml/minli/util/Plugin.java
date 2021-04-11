@@ -13,37 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ml.minli.model;
+package ml.minli.util;
 
-import java.io.Serializable;
+import java.io.File;
 
 /**
  * @author Minli
  */
-public class PlayMedia implements Serializable {
+public class Plugin {
 
-    private String fileName;
+    public static final String analysePlugin = System.getProperty("user.home") + File.separator + ".know-you-player" + File.separator + "plugin" + File.separator + "know-you-player-analyse-impl-1.0.jar";
 
-    private String filePath;
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    @Override
-    public String toString() {
-        return fileName;
-    }
 }
