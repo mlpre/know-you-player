@@ -34,11 +34,6 @@
                         <FontIcon iconColor="#28a745" iconLiteral="fas-play-circle" iconSize="20" />
                      </graphic>
                   </Button>
-                  <Button fx:id="onlineAnalyseButton" mnemonicParsing="false" onAction="#onlineAnalyse" text="%play.web">
-                     <graphic>
-                        <FontIcon iconColor="#00ccff" iconLiteral="fas-link" iconSize="20" />
-                     </graphic>
-                  </Button>
                </items>
             </ToolBar>
          </top>

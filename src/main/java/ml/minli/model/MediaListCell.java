@@ -22,8 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
+import ml.minli.api.model.PlayMedia;
+import ml.minli.api.util.*;
 import ml.minli.controller.MainController;
-import ml.minli.util.*;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 

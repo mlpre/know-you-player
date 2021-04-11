@@ -16,7 +16,19 @@
         <javafx.version>16</javafx.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>know-you-player-api-repository</id>
+            <url>https://raw.githubusercontent.com/min-li/know-you-player-api/master/repository</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <dependency>
+            <groupId>ml.minli</groupId>
+            <artifactId>know-you-player-api</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
