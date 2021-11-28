@@ -2,6 +2,7 @@ open module know.you.player.api {
     exports ml.minli.api.model;
     exports ml.minli.api.util;
     requires java.sql;
+    requires com.sun.jna.platform;
     requires transitive javafx.graphics;
     requires transitive javafx.controls;
     requires transitive javafx.fxml;

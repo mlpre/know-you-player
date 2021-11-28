@@ -1,6 +1,8 @@
 package ml.minli.api.util;
 
 import cn.hutool.core.io.FileUtil;
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.WinReg;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,15 +17,19 @@ public class ResourceUtil {
 
     private static final Logger log = LogManager.getLogger(ResourceUtil.class.getName());
 
-    public static final String pluginPath = System.getProperty("user.home") + File.separator + ".know-you-player" + File.separator + "plugin";
-
     public static final String downloadPath = System.getProperty("user.home") + File.separator + "Music";
 
-    private static final String jnaPath = System.getProperty("user.home") + File.separator + ".vlcj";
+    private static String jnaPath = System.getProperty("user.home") + File.separator + ".vlcj";
 
     static {
         try {
-            FileUtil.mkdir(pluginPath);
+            String installDir = Advapi32Util.registryGetStringValue(WinReg.HKEY_LOCAL_MACHINE, "SOFTWARE\\VideoLAN\\VLC", "InstallDir");
+            if (installDir != null && !installDir.isBlank()) {
+                File file = new File(installDir);
+                if (file.exists() && file.isDirectory()) {
+                    jnaPath = installDir;
+                }
+            }
             FileUtil.mkdir(downloadPath);
             File jnaLib = new File(jnaPath);
             if (!jnaLib.exists()) {
