@@ -20,9 +20,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.Optional;
 
-/**
- * @author Minli
- */
 public class MainUi extends Application {
 
     @Override

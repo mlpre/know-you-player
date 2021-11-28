@@ -1,0 +1,10 @@
+.scroll-bar:vertical > .track-background, .scroll-bar:horizontal > .track-background {
+    -fx-background-color: #F1F1F1;
+    -fx-background-insets: 0;
+}
+
+.scroll-bar:vertical > .thumb, .scroll-bar:horizontal > .thumb {
+    -fx-background-color: #BCBCBC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}

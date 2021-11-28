@@ -16,9 +16,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.io.File;
 import java.util.UUID;
 
-/**
- * @author Minli
- */
 public class MediaListCell extends ListCell<PlayMedia> {
 
     @Override

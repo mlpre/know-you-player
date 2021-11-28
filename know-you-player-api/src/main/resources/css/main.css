@@ -1,0 +1,50 @@
+@import url(scroll-bar.css);
+
+.tool-bar {
+    -fx-background-color: white;
+    -fx-border-color: #F4F4F4;
+    -fx-border-width: 0 0 2 0;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0 2 0 0;
+    -fx-border-color: #F4F4F4;
+}
+
+.tool-bar .button {
+    -fx-background-color: white;
+}
+
+.list-cell .button {
+    -fx-background-color: #EEEEEE;
+}
+
+.tool-bar .button:hover, .list-cell .button:hover {
+    -fx-background-color: #CCCCCC;
+}
+
+.tool-bar .button:pressed, .list-cell .button:pressed {
+    -fx-background-color: #999999;
+}
+
+.list-cell {
+    -fx-pref-height: 3em;
+}
+
+.list-cell:hover {
+    -fx-background-color: #BCBCBC;
+}
+
+.list-cell:selected {
+    -fx-background-color: #BCBCBC;
+}
+
+.list-cell .text {
+    -fx-fill: black;
+}
+
+.slider > .thumb {
+    -fx-background-color: #5264AE;
+}

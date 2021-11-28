@@ -11,9 +11,9 @@
     * 支持自动分析网页音频功能，并且支持导入播放器和下载
 
     * 软件支持中英文，自动根据系统语言切换
-    
+
     * 支持大多数格式媒体文件，目前支持格式如下：
-    
+
         ```
         "3ga","669","a52","aac","ac3","adt","adts","aif","aifc",
         "aiff","amb","amr","aob","ape","au","awb","caf","dts",
@@ -35,33 +35,33 @@
         "sami","smi","txt","smil","stl","usf","dks","pjs","mpl2",
         "mks","vtt","tt","ttml","dfxp","scc"
         ```
-    
+
 * ### 构建要求
 
     * Maven
-    
+
     * JDK11
 
+    * JDK17
+
 * ### 如何使用:
-    
+
     * 下载: [Releases](https://github.com/min-li/know-you-player/releases)
-    
+
     * 构建:
-    
+
         * mvn package
-        
-        * 执行 build.bat(要求 JDK16) 或者 java -jar know-you-player-1.0.jar
+
+        * 执行 build.bat(要求 JDK17) 或者 java -jar KnowYouPlayer.jar
 
 * ### 主要依赖
 
     * vlc(https://www.videolan.org)
-    
+
     * vlcj(https://github.com/caprica/vlcj)
-    
+
     * ikonli(https://github.com/kordamp/ikonli)
-    
+
     * hutool(https://github.com/dromara/hutool)
-    
-    * fastjson(https://github.com/alibaba/fastjson)        
 
     * log4j2(http://logging.apache.org/log4j/2.x/)

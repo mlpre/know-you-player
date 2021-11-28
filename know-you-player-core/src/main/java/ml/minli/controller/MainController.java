@@ -39,9 +39,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.ServiceLoader;
 
-/**
- * @author Minli
- */
 public class MainController implements Initializable {
 
     @FXML
