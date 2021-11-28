@@ -24,7 +24,6 @@ public class MainUi extends Application {
 
     @Override
     public void init() throws Exception {
-        FileUtil.del(ResourceUtil.cachePath);
         super.init();
         ConfigUtil.initConfig();
     }

@@ -1,5 +1,4 @@
 open module know.you.player.core {
-    uses ml.minli.api.AnalyseService;
     requires java.sql;
     requires javafx.graphics;
     requires javafx.controls;

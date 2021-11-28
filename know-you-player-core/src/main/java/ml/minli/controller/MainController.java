@@ -22,12 +22,10 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ml.minli.api.AnalyseService;
 import ml.minli.api.model.FileType;
 import ml.minli.api.model.PlayMedia;
 import ml.minli.api.util.*;
 import ml.minli.model.MediaListCell;
-import ml.minli.util.*;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import uk.co.caprica.vlcj.javafx.view.ResizableImageView;
@@ -37,7 +35,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.ServiceLoader;
 
 public class MainController implements Initializable {
 
@@ -82,8 +79,6 @@ public class MainController implements Initializable {
         borderPane.setCenter(this.resizableImageView);
         //初始化播放器
         playUtil = new PlayUtil(imageView, time, timeLabel, playButton, playMediaListView);
-        //初始化分析插件
-        initAnalysePlugin();
         Platform.runLater(() -> {
             //初始化UI属性
             initProperty();
@@ -230,12 +225,6 @@ public class MainController implements Initializable {
         });
         //初始化列表
         playMediaListView.setCellFactory(list -> new MediaListCell());
-    }
-
-    public void initAnalysePlugin() {
-        JarUtil.loadJarToCurrentThread(Plugin.analysePlugin);
-        ServiceLoader<AnalyseService> serviceLoader = ServiceLoader.load(AnalyseService.class);
-        serviceLoader.forEach(analyseService -> analyseService.analyse(tool, playMediaListView));
     }
 
     public void onlinePlay() {

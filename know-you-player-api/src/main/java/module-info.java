@@ -1,5 +1,4 @@
 open module know.you.player.api {
-    exports ml.minli.api;
     exports ml.minli.api.model;
     exports ml.minli.api.util;
     requires java.sql;
