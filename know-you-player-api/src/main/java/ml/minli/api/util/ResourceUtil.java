@@ -17,8 +17,6 @@ public class ResourceUtil {
 
     public static final String pluginPath = System.getProperty("user.home") + File.separator + ".know-you-player" + File.separator + "plugin";
 
-    public static final String cachePath = System.getProperty("user.home") + File.separator + ".know-you-player" + File.separator + "cache";
-
     public static final String downloadPath = System.getProperty("user.home") + File.separator + "Music";
 
     private static final String jnaPath = System.getProperty("user.home") + File.separator + ".vlcj";
