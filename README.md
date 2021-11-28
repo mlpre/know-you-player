@@ -9,11 +9,11 @@
     * Complete player function: support import, clear, progress bar, previous, next
 
     * The software supports Chinese and English, automatically switch according to the system language
-    
+
     * Support automatic analysis of Web audio function, and support import player and download
-    
+
     * It supports most formats of media files. Currently, it supports the following formats:
-    
+
         ```
         "3ga","669","a52","aac","ac3","adt","adts","aif","aifc",
         "aiff","amb","amr","aob","ape","au","awb","caf","dts",
@@ -35,33 +35,33 @@
         "sami","smi","txt","smil","stl","usf","dks","pjs","mpl2",
         "mks","vtt","tt","ttml","dfxp","scc"
         ```
-    
+
 * ### Build Require
 
     * Maven
-    
+
     * JDK11
 
+    * JDK17
+
 * ### How to use it:
-    
+
     * Download: [Releases](https://github.com/min-li/know-you-player/releases)
-    
+
     * Build:
-    
+
         * mvn package
-        
-        * execute build.bat(Require JDK16) or java -jar know-you-player-1.0.jar
+
+        * execute build.bat(Require JDK17) or java -jar KnowYouPlayer.jar
 
 * ### Main Dependencies
 
     * vlc(https://www.videolan.org)
-    
+
     * vlcj(https://github.com/caprica/vlcj)
-    
+
     * ikonli(https://github.com/kordamp/ikonli)
-    
+
     * hutool(https://github.com/dromara/hutool)
-    
-    * fastjson(https://github.com/alibaba/fastjson)        
 
     * log4j2(http://logging.apache.org/log4j/2.x/)
