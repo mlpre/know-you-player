@@ -6,18 +6,18 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane fx:id="root" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.minli.controller.MainController">
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ml.minli.controller.MainController">
    <children>
-      <BorderPane fx:id="borderPane" StackPane.alignment="CENTER">
-         <top>
-            <ToolBar fx:id="tool" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" StackPane.alignment="CENTER">
+         <children>
+            <ToolBar fx:id="tool" maxHeight="50.0" minHeight="50.0" prefHeight="50.0">
                <items>
                   <Button fx:id="importButton" mnemonicParsing="false" onAction="#importMedia" text="%play.import">
                      <graphic>
@@ -29,22 +29,16 @@
                         <FontIcon iconColor="#dc3545" iconLiteral="fas-trash" iconSize="20" />
                      </graphic>
                   </Button>
-                  <Button fx:id="onlinePlayButton" mnemonicParsing="false" onAction="#onlinePlay" text="%play.onlinePlay">
-                     <graphic>
-                        <FontIcon iconColor="#28a745" iconLiteral="fas-play-circle" iconSize="20" />
-                     </graphic>
-                  </Button>
                </items>
             </ToolBar>
-         </top>
-         <bottom>
-            <GridPane fx:id="control" BorderPane.alignment="CENTER">
+            <ListView fx:id="playMediaListView" VBox.vgrow="ALWAYS" />
+            <GridPane fx:id="control" alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="880.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                <ColumnConstraints halignment="CENTER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints halignment="CENTER" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                  <ColumnConstraints halignment="CENTER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
@@ -71,14 +65,8 @@
                      </GridPane.margin></Slider>
                   <Label fx:id="timeLabel" text="0:0/0:0" GridPane.columnIndex="4" />
                </children>
-               <BorderPane.margin>
-                  <Insets bottom="20.0" top="20.0" />
-               </BorderPane.margin>
             </GridPane>
-         </bottom>
-         <left>
-            <ListView fx:id="playMediaListView" BorderPane.alignment="CENTER" />
-         </left>
-      </BorderPane>
+         </children>
+      </VBox>
    </children>
 </StackPane>

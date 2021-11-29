@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class UiUtil {
 
-    public static Map<String, Object> stageMap = new HashMap<>();
-
     public static Map<String, Object> controllerMap = new HashMap<>();
 
     private UiUtil() {

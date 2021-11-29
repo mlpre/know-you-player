@@ -9,14 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import ml.minli.api.model.PlayMedia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
-import uk.co.caprica.vlcj.javafx.videosurface.ImageViewVideoSurfaceFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -36,15 +34,11 @@ public class PlayUtil {
 
     public final EmbeddedMediaPlayer embeddedMediaPlayer;
 
-    public final ImageView imageView;
-
-    public PlayUtil(ImageView imageView, Slider time, Label timeLabel, FontIcon playButton, ListView<PlayMedia> playMediaListView) {
+    public PlayUtil(Slider time, Label timeLabel, FontIcon playButton, ListView<PlayMedia> playMediaListView) {
         time.setMin(0);
         timeLabel.setText("0:0/0:0");
-        this.imageView = imageView;
         this.mediaPlayerFactory = new MediaPlayerFactory();
         this.embeddedMediaPlayer = mediaPlayerFactory.mediaPlayers().newEmbeddedMediaPlayer();
-        this.embeddedMediaPlayer.videoSurface().set(ImageViewVideoSurfaceFactory.videoSurfaceForImageView(imageView));
         this.embeddedMediaPlayer.events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void playing(MediaPlayer mediaPlayer) {
@@ -91,7 +85,6 @@ public class PlayUtil {
 
     public void playMedia(String mediaPath) {
         try {
-            imageView.setImage(null);
             embeddedMediaPlayer.media().play(mediaPath);
         } catch (Exception e) {
             log.error("Play Error", e);

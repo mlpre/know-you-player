@@ -1,6 +1,5 @@
 package ml.minli.model;
 
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +11,6 @@ import ml.minli.api.util.*;
 import ml.minli.controller.MainController;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
-
-import java.io.File;
-import java.util.UUID;
 
 public class MediaListCell extends ListCell<PlayMedia> {
 
@@ -42,48 +38,10 @@ public class MediaListCell extends ListCell<PlayMedia> {
                     e.printStackTrace();
                 }
             });
-            Button downloadButton = new Button();
-            FontIcon downloadFontIcon = new FontIcon(FontAwesomeSolid.FILE_DOWNLOAD);
-            downloadFontIcon.setIconColor(Paint.valueOf("#28a745"));
-            downloadButton.setGraphic(downloadFontIcon);
-            downloadButton.setOnAction(event -> {
-                try {
-                    MediaListCell mediaListCell = ((MediaListCell) ((Button) event.getTarget()).getParent().getParent());
-                    PlayMedia currPlayMedia = mediaListCell.getItem();
-                    String filePath = currPlayMedia.getFilePath();
-                    new Thread(new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            String fileName = currPlayMedia.getFileName();
-                            String suffix = filePath.substring(filePath.lastIndexOf(".")).length() <= 5 ? filePath.substring(filePath.lastIndexOf(".")) : ".mp3";
-                            if (currPlayMedia.getFileName().startsWith("http://") || currPlayMedia.getFileName().startsWith("https://")) {
-                                fileName = UUID.randomUUID().toString().replace("-", "") + suffix;
-                            } else {
-                                fileName = fileName + suffix;
-                            }
-                            DownloadUtil.download(filePath, ResourceUtil.downloadPath + File.separator + fileName);
-                            PlayMedia newPlayMedia = PlayUtil.playMediaList.get(mediaListCell.getIndex());
-                            newPlayMedia.setFilePath(ResourceUtil.downloadPath + File.separator + fileName);
-                            newPlayMedia.setFileName(fileName);
-                            PlayUtil.saveList();
-                            ConfigUtil.store();
-                            MainController mainController = (MainController) UiUtil.controllerMap.get(MainController.class.getName());
-                            mainController.playMediaListView.refresh();
-                            return null;
-                        }
-                    }).start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
             HBox hBox = new HBox();
             hBox.setSpacing(5);
             hBox.setAlignment(Pos.CENTER_LEFT);
-            if (playMedia.getFilePath().startsWith("http://") || playMedia.getFilePath().startsWith("https://")) {
-                hBox.getChildren().addAll(downloadButton, delButton, label);
-            } else {
-                hBox.getChildren().addAll(delButton, label);
-            }
+            hBox.getChildren().addAll(delButton, label);
             this.setGraphic(hBox);
         } else {
             this.setGraphic(null);
