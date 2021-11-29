@@ -10,9 +10,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import ml.minli.api.util.ConfigUtil;
-import ml.minli.api.util.LanguageUtil;
-import ml.minli.api.util.ResourceUtil;
+import ml.minli.util.ConfigUtil;
+import ml.minli.util.LanguageUtil;
+import ml.minli.util.ResourceUtil;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 

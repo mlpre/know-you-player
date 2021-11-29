@@ -37,7 +37,7 @@
 
         * mvn package
 
-        * 执行 build.bat(要求 JDK17) 或者 java -jar KnowYouPlayer.jar
+        * 执行 build.bat(要求 JDK17) 或者 java -jar know-you-player-1.0.jar
 
 * ### 主要依赖
 

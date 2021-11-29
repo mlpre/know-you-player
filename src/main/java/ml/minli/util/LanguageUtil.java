@@ -1,4 +1,4 @@
-package ml.minli.api.util;
+package ml.minli.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
