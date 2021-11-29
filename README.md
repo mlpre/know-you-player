@@ -37,7 +37,7 @@
 
         * mvn package
 
-        * execute build.bat(Require JDK17) or java -jar KnowYouPlayer.jar
+        * execute build.bat(Require JDK17) or java -jar know-you-player-1.0.jar
 
 * ### Main Dependencies
 

@@ -1,4 +1,4 @@
-package ml.minli.api.util;
+package ml.minli.util;
 
 import java.util.HashMap;
 import java.util.Map;

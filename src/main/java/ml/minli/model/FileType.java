@@ -1,4 +1,4 @@
-package ml.minli.api.model;
+package ml.minli.model;
 
 public class FileType {
 

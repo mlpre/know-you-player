@@ -1,4 +1,4 @@
-package ml.minli.api.util;
+package ml.minli.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
