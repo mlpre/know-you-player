@@ -1,13 +1,15 @@
-package ml.minli.model;
+package io.github.mlpre.model;
 
+import io.github.mlpre.util.ConfigUtil;
+import io.github.mlpre.util.PlayUtil;
+import io.github.mlpre.util.UiUtil;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
-import ml.minli.util.*;
-import ml.minli.controller.MainController;
+import io.github.mlpre.controller.MainController;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 

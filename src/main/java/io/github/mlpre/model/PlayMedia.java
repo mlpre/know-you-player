@@ -1,4 +1,4 @@
-package ml.minli.model;
+package io.github.mlpre.model;
 
 import java.io.Serializable;
 
