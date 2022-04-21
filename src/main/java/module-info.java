@@ -1,4 +1,4 @@
-open module know.you.player.core {
+open module know.you.player {
     requires java.sql;
     requires com.sun.jna.platform;
     requires javafx.graphics;

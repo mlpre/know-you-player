@@ -1,5 +1,8 @@
-package ml.minli.ui;
+package io.github.mlpre.ui;
 
+import io.github.mlpre.util.ConfigUtil;
+import io.github.mlpre.util.LanguageUtil;
+import io.github.mlpre.util.ResourceUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import ml.minli.util.ConfigUtil;
-import ml.minli.util.LanguageUtil;
-import ml.minli.util.ResourceUtil;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 

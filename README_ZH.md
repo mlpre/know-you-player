@@ -25,13 +25,9 @@
 
     * Maven
 
-    * JDK11
-
     * JDK17
 
 * ### 如何使用:
-
-    * 下载: [Releases](https://github.com/min-li/know-you-player/releases)
 
     * 构建:
 

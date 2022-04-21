@@ -1,4 +1,4 @@
-package ml.minli.util;
+package io.github.mlpre.util;
 
 import java.util.HashMap;
 import java.util.Map;

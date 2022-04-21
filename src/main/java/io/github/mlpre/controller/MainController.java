@@ -1,6 +1,12 @@
-package ml.minli.controller;
+package io.github.mlpre.controller;
 
 import cn.hutool.core.io.FileUtil;
+import io.github.mlpre.model.FileType;
+import io.github.mlpre.model.MediaListCell;
+import io.github.mlpre.util.ConfigUtil;
+import io.github.mlpre.util.LanguageUtil;
+import io.github.mlpre.util.PlayUtil;
+import io.github.mlpre.util.UiUtil;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import ml.minli.model.FileType;
-import ml.minli.model.PlayMedia;
-import ml.minli.util.*;
-import ml.minli.model.MediaListCell;
+import io.github.mlpre.model.PlayMedia;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
